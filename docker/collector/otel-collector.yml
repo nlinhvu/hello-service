@@ -13,6 +13,15 @@ exporters:
     const_labels:
       label1: value1
 
+  zipkin:
+    endpoint: "http://zipkin-all-in-one:9411/api/v2/spans"
+    format: proto
+
+  jaeger:
+    endpoint: jaeger-all-in-one:14250
+    tls:
+      insecure: true
+
 # https://github.com/open-telemetry/opentelemetry-collector/blob/main/extension/README.md
 extensions:
   # responsible for responding to health check calls on behalf of the collector.
@@ -29,3 +38,7 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [prometheus]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [zipkin,jaeger]
