@@ -8,10 +8,18 @@ processors:
   batch:
 
 exporters:
+  logging:
+    loglevel: debug
+
   prometheus:
     endpoint: "0.0.0.0:8889"
     const_labels:
       label1: value1
+
+  otlp:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
 
   zipkin:
     endpoint: "http://zipkin-all-in-one:9411/api/v2/spans"
@@ -37,8 +45,8 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [prometheus]
+      exporters: [logging,prometheus]
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [zipkin,jaeger]
+      exporters: [logging,jaeger,zipkin,otlp]
