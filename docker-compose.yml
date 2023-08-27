@@ -30,6 +30,12 @@ services:
     ports:
       - "9090:9090"
 
+  loki:
+    image: grafana/loki:latest
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+
   tempo:
     image: grafana/tempo:latest
     command: [ "-config.file=/etc/tempo.yml" ]

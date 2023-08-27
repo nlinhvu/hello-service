@@ -21,7 +21,20 @@ dependencies {
 	runtimeOnly 'io.micrometer:micrometer-registry-otlp'
 
 	runtimeOnly 'io.micrometer:micrometer-tracing-bridge-otel'
-	runtimeOnly 'io.opentelemetry:opentelemetry-exporter-otlp'
+	implementation 'io.opentelemetry:opentelemetry-api:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-context:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk-trace:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk-metrics:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk-common:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-extension-trace-propagators:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-exporter-common:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-exporter-otlp:1.29.0'
+	implementation 'io.opentelemetry:opentelemetry-exporter-otlp-common:1.29.0'
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-semconv:1.29.0-alpha'
+
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:1.29.0-alpha'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -2,6 +2,7 @@ receivers:
   otlp:
     protocols:
       http:
+      grpc:
 
 processors:
   # batch metrics before sending to reduce API usage
@@ -10,6 +11,9 @@ processors:
 exporters:
   logging:
     loglevel: debug
+
+  loki:
+    endpoint: "http://loki:3100/loki/api/v1/push"
 
   prometheus:
     endpoint: "0.0.0.0:8889"
@@ -45,8 +49,11 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging,prometheus]
+      exporters: [prometheus]
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging,jaeger,zipkin,otlp]
+      exporters: [jaeger,zipkin,otlp]
+    logs:
+      receivers: [otlp]
+      exporters: [loki]
