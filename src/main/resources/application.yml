@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,metrics
   otlp:
     metrics:
       export:
@@ -17,3 +17,11 @@ management:
   tracing:
     sampling:
       probability: 1.0
+  metrics:
+    tags:
+      department: ${SERVICE_DEPARTMENT:software}
+      team: ${SERVICE_TEAM:greeting}
+      service: ${spring.application.name}
+      env: ${SERVICE_ENV:dev}
+      region: ${SERVICE_REGION:europe-west1}
+      instance.id: ${SERVICE_INSTANCE_ID:dasdasdsadasd}
