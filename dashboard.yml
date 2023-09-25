@@ -1,0 +1,56 @@
+dashboard:
+
+  request-rate:
+    request-rates:
+      type: time series
+      query: sum by (method, uri) (rate(http_server_requests_count[1m]))
+      unit: rps
+    top-10-rates:
+      type: table
+      query: topk(10, sum by(method, uri) (rate(http_server_requests_count[1m])))
+      unit: rps
+      transform: organize fields
+
+  request-latency:
+    request-latencies:
+      type: time series
+      query: sum by(method, uri) (rate(http_server_requests_sum[1m])) / sum by(method, uri) (rate(http_server_requests_count[1m]))
+      unit: ms
+    top-10-latencies:
+      type: table
+      query: topk(10, sum by(method, uri) (rate(http_server_requests_sum[1m])) / sum by(method, uri) (rate(http_server_requests_count[1m])))
+      unit: ms
+      transform: organize fields
+
+  percentile-latency:
+    90th-percentile-latencies:
+      type: time series
+      query: histogram_quantile(0.90, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+      unit: ms
+    50th-percentile-latencies:
+      type: time series
+      query: histogram_quantile(0.50, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+      unit: ms
+    sleep-percentile-latencies:
+      type: time series
+      query:
+        - histogram_quantile(0.99, sum by(le) (rate(http_server_requests_bucket{method="GET", uri="/sleep"}[1m])))
+        - histogram_quantile(0.95, sum by(le) (rate(http_server_requests_bucket{method="GET", uri="/sleep"}[1m])))
+        - histogram_quantile(0.90, sum by(le) (rate(http_server_requests_bucket{method="GET", uri="/sleep"}[1m])))
+        - histogram_quantile(0.70, sum by(le) (rate(http_server_requests_bucket{method="GET", uri="/sleep"}[1m])))
+        - histogram_quantile(0.50, sum by(le) (rate(http_server_requests_bucket{method="GET", uri="/sleep"}[1m])))
+      unit: ms
+    percentile-latencies:
+      type: table
+      query:
+        - histogram_quantile(0.50, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+        - histogram_quantile(0.70, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+        - histogram_quantile(0.90, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+        - histogram_quantile(0.95, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+        - histogram_quantile(0.99, sum by(le, method, uri) (rate(http_server_requests_bucket[1m])))
+      unit: ms
+      transform:
+        - merge
+        - organize fields
+        - sort
+

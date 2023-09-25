@@ -21,15 +21,19 @@ management:
     distribution:
       percentiles:
         do.sleep.method.timed: 0.99, 0.95, 0.9, 0.7, 0.5
+        http.server.requests: 0.99, 0.95, 0.9, 0.7, 0.5
       percentiles-histogram:
         do.sleep.method.timed: true
+        http.server.requests: true
       minimum-expected-value:
         do.sleep.method.timed: 100ms
+        http.server.requests: 100ms
       maximum-expected-value:
         do.sleep.method.timed: 10s
+        http.server.requests: 10s
       slo:
         do.sleep.method.timed: 300ms,500ms,1s,2s
-
+        http.server.requests: 300ms,500ms,1s,2s
 
 
 #    tags:
