@@ -22,7 +22,7 @@ dependencies {
 	runtimeOnly 'io.micrometer:micrometer-registry-otlp'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-	runtimeOnly 'io.micrometer:micrometer-tracing-bridge-otel'
+	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
 	implementation 'io.opentelemetry:opentelemetry-api:1.29.0'
 	implementation 'io.opentelemetry:opentelemetry-context:1.29.0'
 	implementation 'io.opentelemetry:opentelemetry-sdk:1.29.0'
