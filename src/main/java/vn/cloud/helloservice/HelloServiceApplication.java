@@ -1,7 +1,6 @@
 package vn.cloud.helloservice;
 
-import io.micrometer.core.annotation.Timed;
-import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.observation.annotation.Observed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -70,8 +69,9 @@ public class HelloServiceApplication {
 
 	@Service
 	class SleepService {
-		@Timed(value = "do.sleep.method.timed")
-		@NewSpan(value = "do-sleep-method-span")
+//		@Timed(value = "do.sleep.method.timed")
+//		@NewSpan(value = "do-sleep-method-span")
+		@Observed(name = "do.sleep.method.timed", contextualName = "do-sleep-method-span", lowCardinalityKeyValues = {"low", "low"})
 		public Long doSleep(Long ms) {
 			try {
 				TimeUnit.MILLISECONDS.sleep(ms);
